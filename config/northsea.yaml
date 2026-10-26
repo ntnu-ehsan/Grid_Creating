@@ -1,0 +1,117 @@
+# =====================================================================
+# Case: North Sea (NO, GB, FR, DE, BE, NL, DK)
+# =====================================================================
+# Run with:  python run.py --case northsea
+#
+# Points at the curated North Sea dataset, where buses, lines, links,
+# generation and load distribution have already been cleaned and matched.
+# Generation carries bus_id, so it is read at nodal level directly.
+#
+# Note the two NUTS sources: Eurostat dropped the United Kingdom after the
+# 2021 release, so UK regions come from the older file.
+# ---------------------------------------------------------------------
+
+run:
+  name: northsea_nuts2
+  output_dir: outputs
+  overwrite: true
+
+iamc:
+  model: North Sea
+  scenario: Baseline
+  reference_year: 2024
+  region_separator: ">"
+  demand_variable: "Final Energy|Electricity [Share]"
+  demand_unit: "%"
+
+spatial:
+  level: nuts2
+  nuts_geojson:
+    - path: "data/spatial/NUTS_RG_60M_2024_3035.geojson"
+    - path: "data/spatial/NUTS_RG_60M_2021_3035.geojson"
+      countries: ["GB"]            # UK is absent from the 2024 release
+  snap_outside_buses: true
+  fix_country_mismatch: true
+
+countries: ["NO", "GB", "FR", "DE", "BE", "NL", "DK"]
+
+# The curated generation table has no commissioning dates, so a single
+# snapshot is written. The dated PyPSA table can be substituted below if a
+# capacity time series is needed.
+capacity_timeseries:
+  enabled: false
+  years: [2020, 2025, 2030]
+
+grid:
+  format: pypsa
+  buses: "data/northsea/grid/buses.csv"
+  lines: "data/northsea/grid/lines.csv"
+  links: "data/northsea/grid/links.csv"
+  neighbouring_buses: "data/northsea/grid/neighbouring_buses.csv"
+  keep_cross_border: true
+  external_suffix: "_EXT"
+
+generation:
+  file: "data/northsea/generation/generation.csv"
+  format: nodal                    # the file already has bus_id
+  assign_to_bus: column
+  bus_column: bus_id
+  retire_before: null              # no decommissioning dates in this dataset
+  validation_file: null
+  validation_tolerance: 0.25
+
+demand:
+  # The curated load distribution already covers all seven countries. It was
+  # itself built from Atlas pixels (BE, DE, DK, FR, NL), population (GB) and
+  # population plus industry (NO) - the raw methods remain available here.
+  method:
+    default: precomputed
+  precomputed:
+    files:
+      - path: "data/northsea/demand/precomputed/load_distribution.csv"
+        bus_column: bus_id
+        share_column: national_load_share
+
+  atlas:
+    path_template: "data/northsea/demand/atlas/{country}/electricity.csv"
+    lon_column: "Longitude (WGS84)"
+    lat_column: "Latitude (WGS84)"
+    value_column: "Electricity Value"
+
+  population:
+    path_template: "data/northsea/demand/population/{code}.csv"
+    lon_column: X
+    lat_column: Y
+    value_column: Z
+
+  industry:
+    "NO":
+      sites: "data/northsea/demand/industry/industry_2022_no_offshore_oil.csv"
+      offshore: "data/northsea/demand/industry/ind_offshore_oil_current.csv"
+      national_total: "data/northsea/demand/industry/total_yearly_mean_loads_powervision.csv"
+      total_column: mean_load_mw
+      consumption_column: consumption_mw
+
+  cache_dir: .cache
+  reuse_cache: true
+
+outputs:
+  csv: true
+  iamc_xlsx: true
+  iamc_csv: true
+  report_html: true
+  map_html: true
+  figures: true
+
+country_names:
+  "NO": Norway
+  GB: United Kingdom
+  UK: United Kingdom
+  FR: France
+  DE: Germany
+  BE: Belgium
+  NL: Netherlands
+  DK: Denmark
+
+logging:
+  level: INFO

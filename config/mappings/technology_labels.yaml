@@ -1,0 +1,70 @@
+# Normalisation of the raw fuel / technology labels found in the source data.
+# Keys are compared case-insensitively after stripping whitespace.
+
+fueltype:
+  "biomass": Solid Biomass
+  "solid biomass": Solid Biomass
+  "biogas": Biogas
+  "waste": Waste
+  "hard coal": Hard Coal
+  "coal": Hard Coal
+  "lignite": Lignite
+  "brown coal": Lignite
+  "fossil brown coal/lignite": Lignite
+  "fossil hard coal": Hard Coal
+  "fossil gas": Natural Gas
+  "fossil coal-derived gas": Natural Gas
+  "natural gas": Natural Gas
+  "gas": Natural Gas
+  "fossil oil": Oil
+  "fossil oil shale": Oil
+  "fossil peat": Peat
+  "oil": Oil
+  "nuclear": Nuclear
+  "hydro": Hydro
+  "wind": Wind
+  "solar": Solar
+  "geothermal": Geothermal
+  "marine": Ocean
+  "ocean": Ocean
+  "battery": Battery
+  "energy storage": Other
+  "other": Other
+  "unknown": Other
+  "nan": Other
+  "": Other
+
+technology:
+  "run-of-river": Run Of River
+  "run of river": Run Of River
+  "run_of_river": Run Of River
+  "ror": Run Of River
+  "reservoir": Reservoir
+  "pumped storage": Pumped Storage
+  "pumped_storage": Pumped Storage
+  "pumped hydro storage": Pumped Storage
+  "steam turbine": Steam Turbine
+  "ccgt": CCGT
+  "combined_cycle": CCGT
+  "combined cycle": CCGT
+  "ocgt": OCGT
+  "gas_turbine": OCGT
+  "gas turbine": OCGT
+  "combustion engine": Internal Combustion
+  "internal combustion": Internal Combustion
+  "onshore": Onshore
+  "offshore": Offshore
+  "pv": PV
+  "csp": CSP
+  "solar thermal": CSP
+  "marine": Ocean
+  # Where the technology only repeats the fuel it carries no extra information,
+  # so it is blanked and the fuel-level IAMC variable is used.
+  "coal": ""
+  "biomass": ""
+  "nuclear": ""
+  "hydro": ""
+  "unknown": ""
+  "not found": ""
+  "nan": ""
+  "": ""

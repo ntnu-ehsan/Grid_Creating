@@ -1,0 +1,22 @@
+# Pipeline artefacts - regenerate with `python run.py`
+outputs/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/
+
+# Editors
+.idea/
+.vscode/
+.DS_Store
+
+# Large raster/model formats are ignored unless explicitly bundled below.
+*.tif
+*.geojson
+!data/spatial/*.geojson
+*.nc

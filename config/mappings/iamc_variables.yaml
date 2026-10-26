@@ -1,0 +1,72 @@
+# Mapping from the normalised (fueltype, technology) pair to an IAMC variable.
+# Key format:  "<Fueltype>|<Technology>"   - an empty technology means
+# "any technology of this fuel" and is used as the fallback.
+# The prefix (Capacity|Electricity|) is added by the code.
+
+prefix: "Capacity|Electricity|"
+fallback: "Other"
+
+variables:
+  # --- gas -------------------------------------------------------
+  "Natural Gas|CCGT": "Gas|CCGT|w/o CCS"
+  "Natural Gas|OCGT": "Gas|OCGT|w/o CCS"
+  "Natural Gas|Steam Turbine": "Gas|Steam Turbine|w/o CCS"
+  "Natural Gas|Internal Combustion": "Gas|Internal Combustion|w/o CCS"
+  "Natural Gas|": "Gas|w/o CCS"
+
+  # --- oil -------------------------------------------------------
+  "Oil|CCGT": "Oil|CCGT|w/o CCS"
+  "Oil|OCGT": "Oil|OCGT|w/o CCS"
+  "Oil|Steam Turbine": "Oil|Steam Turbine|w/o CCS"
+  "Oil|Internal Combustion": "Oil|Internal Combustion|w/o CCS"
+  "Oil|": "Oil|w/o CCS"
+
+  # --- coal / peat ----------------------------------------------
+  "Hard Coal|": "Coal|w/o CCS"
+  "Lignite|": "Coal|w/o CCS"
+  "Peat|": "Coal|w/o CCS"
+
+  # --- nuclear ---------------------------------------------------
+  "Nuclear|": "Nuclear"
+
+  # --- renewables ------------------------------------------------
+  "Solar|PV": "Solar|PV"
+  "Solar|CSP": "Solar|CSP"
+  "Solar|": "Solar|PV"
+  "Wind|Onshore": "Wind|Onshore"
+  "Wind|Offshore": "Wind|Offshore"
+  "Wind|": "Wind"
+  "Hydro|Reservoir": "Hydro|Reservoir"
+  "Hydro|Run Of River": "Hydro|Run of River"
+  "Hydro|Pumped Storage": "Hydro|Pumped Storage"
+  "Hydro|": "Hydro"
+  "Geothermal|": "Geothermal"
+  "Ocean|": "Ocean"
+
+  # --- bio / waste ----------------------------------------------
+  "Solid Biomass|": "Biomass|w/o CCS"
+  "Biogas|": "Biomass|w/o CCS"
+  "Waste|": "Biomass|w/o CCS"
+
+  # --- storage ---------------------------------------------------
+  "Battery|": "Storage|Battery"
+
+  # --- technology-only fallbacks ---------------------------------
+  # Some units record a technology but no usable fuel. The technology
+  # implies the fuel closely enough to keep them out of "Other".
+  "|CCGT": "Gas|CCGT|w/o CCS"
+  "|OCGT": "Gas|OCGT|w/o CCS"
+  "|Steam Turbine": "Gas|Steam Turbine|w/o CCS"
+  "|Ocean": "Ocean"
+
+# Network variables written for the aggregated transmission data.
+network:
+  ac_capacity:
+    variable: "Network|Electricity|Capacity"
+    unit: MW
+  ac_reactance:
+    variable: "Network|Electricity|Reactance"
+    unit: Ohm
+  dc_capacity:
+    variable: "Network|Electricity|DC|Capacity"
+    unit: MW
