@@ -50,5 +50,16 @@ already matched to bus ids. The load distribution behind
 `load_distribution.csv` was built from Atlas pixels (BE, DE, DK, FR, NL),
 WorldPop population (GB) and population plus industrial sites (NO).
 
-Internal project data — please do not pass it on further without checking
-with Ehsan first.
+## Attribution
+
+These are openly published datasets, redistributed here so the case study
+runs out of the box. When reusing them, credit the original providers:
+
+- **JRC Atlas of the European Energy Sector** — 1 km electricity demand
+  rasters, behind the Atlas-derived part of the load distribution
+- **WorldPop** — 1 km gridded population, behind the GB and NO parts
+- **Eurostat** — NUTS 2021 and 2024 administrative geometries
+- **ENTSO-E** — transparency statistics used for capacity validation
+- **PyPSA-Eur** — the transmission network the North Sea dataset builds on
+
+Check each provider's terms for the exact citation they ask for.

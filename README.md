@@ -356,5 +356,8 @@ Every path in `config/northsea.yaml` points inside this repository, so nothing
 depends on a shared drive. `data/README.md` lists the files and says which raw
 inputs were left out.
 
-**This copy is for internal use within the project — please do not
-redistribute the data further without checking with Ehsan first.**
+The bundled inputs come from openly published datasets. If you reuse them,
+keep the attribution to their original providers — the JRC Atlas of the
+European Energy Sector, WorldPop, Eurostat (NUTS) and the ENTSO-E
+transparency statistics — and check each provider's own terms for the exact
+wording they ask for.
